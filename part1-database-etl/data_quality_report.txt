@@ -1,0 +1,18 @@
+File: customers
+Records Processed: 26
+Duplicates Removed: 5
+Missing Values Handled: 1
+Records Loaded: 0
+----------------------------------------
+File: products
+Records Processed: 20
+Duplicates Removed: 0
+Missing Values Handled: 4
+Records Loaded: 1
+----------------------------------------
+File: sales
+Records Processed: 41
+Duplicates Removed: 1
+Missing Values Handled: 5
+Records Loaded: 1
+----------------------------------------

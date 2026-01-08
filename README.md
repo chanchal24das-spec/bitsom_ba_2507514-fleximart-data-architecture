@@ -54,7 +54,7 @@ part3-datawarehouse/
 
 ## Technologies Used
 
-- Python 3.9, pandas, mysql-connector-python
+- Python 3.9
 - MySQL 8.0
 - MongoDB 6.0
 - pandas,

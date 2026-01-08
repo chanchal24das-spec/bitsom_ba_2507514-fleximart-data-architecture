@@ -1,10 +1,15 @@
-# bitsom_ba_2507514-fleximart-data-architecture
+# Bitsom_ba_2507514-fleximart-data-architecture
+
 Module 2: Assignment: AI Data Architecture Design and Implementation
+
 # FlexiMart Data Architecture Project
 
 **Student Name:** Chanchal Das
+
 **Student ID:** BITSOM_BA_2507514
+
 **Email:** chanchal24das@gmail.com
+
 **Date:** 06-01-2026
 
 ## Project Overview
@@ -16,47 +21,67 @@ I analyzed product data requirements and implemented NoSQL solutions using Mongo
 Finally, I built a data warehouse using a star schema, defining fact and dimension tables, and generated analytical reports to support high-level business analysis and reporting.
 
 ## Repository Structure
-├── part1-database-etl/
-│   ├── etl_pipeline.py
-│   ├── schema_documentation.md
-│   ├── business_queries.sql
-│   └── data_quality_report.txt
-├── part2-nosql/
-│   ├── nosql_analysis.md
-│   ├── mongodb_operations.js
-│   └── products_catalog.json
-├── part3-datawarehouse/
-│   ├── star_schema_design.md
-│   ├── warehouse_schema.sql
-│   ├── warehouse_data.sql
-│   └── analytics_queries.sql
-└── README.md
+
+The project is organized into three main parts, each corresponding to a specific phase of the assignment. 
+The structure below clearly separates ETL, NoSQL, and Data Warehouse components for better readability and maintainability.
+
+
+Data
+- customers_raw.csv  
+- products_raw.csv  
+- sales_raw.csv  
+
+part1-database-etl/
+- etl_pipeline.py
+- business_queries.sql
+- schema_documentation.md
+- data_quality_report.txt
+- requirements.txt
+- README.md
+
+part2-nosql/
+- mongodb_operations.js
+- nosql_analysis.md
+- products_catalog.json
+- README.md
+
+part3-datawarehouse/
+- star_schema_design.md
+- warehouse_schema.sql
+- warehouse_data.sql
+- analytics_queries.sql
+- README.md  
 
 ## Technologies Used
 
 - Python 3.9, pandas, mysql-connector-python
 - MySQL 8.0
 - MongoDB 6.0
+- pandas,
+- mysql-connector-python
+- VS Code
+- MySQL Workbench
+- MongoDB Compass
 
-## Setup Instructions
+# Setup Instructions
 
-# Create databases
+## Create databases
 mysql -u root -p -e "CREATE DATABASE fleximart;"
 mysql -u root -p -e "CREATE DATABASE fleximart_dw;"
 
-# Run Part 1 - ETL Pipeline
+## Run Part 1 - ETL Pipeline
 python part1-database-etl/etl_pipeline.py
 
-# Run Part 1 - Business Queries
+## Run Part 1 - Business Queries
 mysql -u root -p fleximart < part1-database-etl/business_queries.sql
 
-# Run Part 3 - Data Warehouse
+## Run Part 3 - Data Warehouse
 mysql -u root -p fleximart_dw < part3-datawarehouse/warehouse_schema.sql
 mysql -u root -p fleximart_dw < part3-datawarehouse/warehouse_data.sql
 mysql -u root -p fleximart_dw < part3-datawarehouse/analytics_queries.sql
 
 
-### MongoDB Setup
+## MongoDB Setup
 
 mongosh < part2-nosql/mongodb_operations.js
 
@@ -67,13 +92,40 @@ mongosh < part2-nosql/mongodb_operations.js
 -- Applying dimensional modeling concepts for analytics
 -- Writing efficient SQL for both OLTP and OLAP systems
 
-## Challenges Faced & Solutions
+# Challenges Faced & Solutions
 
-- Handling inconsistent source data
-  -- Solved by implementing validation, standardization, and default handling in the ETL layer.
+## Technical Challenges and Solutions
 
-- Designing a scalable analytics model
-  -- Solved by using a star schema with surrogate keys and proper granularity.
+- **Inconsistent and Ambiguous Date Formats**
+  - Raw CSV files contained mixed date formats (`YYYY-MM-DD`, `DD/MM/YYYY`, `MM-DD-YYYY`) within the same columns.
+  - This caused parsing warnings and risked incorrect date interpretation during ETL.
+  - **Solution:** Implemented a custom date-parsing function that explicitly attempted known formats in sequence.
+  - Invalid or unparseable dates were converted to `NULL` to ensure consistent `DATE` values in MySQL.
+
+- **Duplicate Records and Missing Foreign Keys in Sales Data**
+  - The sales dataset included duplicate transactions and records with missing `customer_id` or `product_id`.
+  - Direct loading would have caused foreign key constraint violations and inaccurate analytics.
+  - **Solution:** Removed duplicate transactions during transformation.
+  - Excluded records with missing foreign keys before loading to maintain referential integrity.
+
+- **Referential Integrity Enforcement During Load**
+  - Ensured that `customers` and `products` data was loaded before `orders` and `order_items`.
+  - Prevented load-time failures by validating foreign key references during transformation.
+
+- **MongoDB’s aggregation pipeline can be difficult to understand initially.
+  - Analytical queries seems complex compared to SQL.
+  - MongoDB provides powerful aggregation stages such as '$match', $group, $avg, and $sort.
+  - Structured pipelines allow efficient analytical operations.
+
+- **Data Quality Assurance and Validation**
+  - Tracked record counts before and after transformation.
+  - Generated a `data_quality_report.txt` summarizing duplicates removed, missing values handled, and records loaded successfully.
+
+- **Project Outcome**
+  - Successfully completed an end-to-end ETL pipeline with clean, validated, and analysis-ready data.
+  - Improved understanding of data cleaning, ETL robustness, SQL execution environments, and database integrity constraints.
+
+
 
 
 

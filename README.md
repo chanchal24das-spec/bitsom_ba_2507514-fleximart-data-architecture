@@ -88,11 +88,10 @@ mongosh < part2-nosql/mongodb_operations.js
 ## Key Learnings
 
 -- Designing robust ETL pipelines for imperfect real-world data
--- Choosing between relational and NoSQL databases based on use cases
--- Applying dimensional modeling concepts for analytics
--- Writing efficient SQL for both OLTP and OLAP systems
 
-# Challenges Faced & Solutions
+-- Choosing between relational and NoSQL databases based on use cases
+
+-- Writing efficient SQL for OLAP systems
 
 ## Technical Challenges and Solutions
 
@@ -112,7 +111,7 @@ mongosh < part2-nosql/mongodb_operations.js
   - Ensured that `customers` and `products` data was loaded before `orders` and `order_items`.
   - Prevented load-time failures by validating foreign key references during transformation.
 
-- **MongoDB’s aggregation pipeline can be difficult to understand initially.
+- **MongoDB’s aggregation pipeline can be difficult to understand initially**
   - Analytical queries seems complex compared to SQL.
   - MongoDB provides powerful aggregation stages such as '$match', $group, $avg, and $sort.
   - Structured pipelines allow efficient analytical operations.
